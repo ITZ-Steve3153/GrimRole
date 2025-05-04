@@ -4,6 +4,7 @@ from discord import app_commands
 import asyncio
 import os
 from dotenv import load_dotenv
+from keep_alive import keep_alive  # ✅ Import keep_alive
 
 load_dotenv()  # Load .env file if present locally
 
@@ -167,4 +168,5 @@ async def on_member_update(before, after):
 
 # === Start the Bot ===
 
+keep_alive()  # ✅ Start the dummy web server for Render
 bot.run(os.getenv("DISCORD_TOKEN"))
