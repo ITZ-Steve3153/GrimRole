@@ -3,10 +3,12 @@ from discord.ext import commands, tasks
 from discord import app_commands
 import asyncio
 import os
-from keep_alive import keep_alive
+from dotenv import load_dotenv
+
+load_dotenv()  # Load .env file if present locally
 
 intents = discord.Intents.default()
-intents.members = True  # Removed extra indentation
+intents.members = True
 intents.guilds = True
 intents.message_content = True
 
@@ -124,7 +126,6 @@ async def punishment_check():
                                 elif info["action"] == "ban":
                                     await member.ban(reason="Punishment role triggered")
                                 elif info["action"] == "mute":
-                                    overwrite = discord.PermissionOverwrite(send_messages=False)
                                     await member.edit(roles=[r for r in member.roles if r.id != role.id])
                                 del info["applied"][member.id]
                             except:
@@ -166,5 +167,4 @@ async def on_member_update(before, after):
 
 # === Start the Bot ===
 
-keep_alive()
 bot.run(os.getenv("DISCORD_TOKEN"))
